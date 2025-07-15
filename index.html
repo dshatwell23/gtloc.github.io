@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="GT-Loc maps the image, time, and location modalities into the same embedding space, enabling geo-temporal retrival applications.">
+  <meta name="keywords" content="GT-Loc, time prediction, geo-localization, multimodal, retrieval">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GT-Loc: Unifying When and Where in Images Through a Joint Embedding Space</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<!-- <nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://keunhong.com">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://hypernerf.github.io">
+            HyperNeRF
+          </a>
+          <a class="navbar-item" href="https://nerfies.github.io">
+            Nerfies
+          </a>
+          <a class="navbar-item" href="https://latentfusion.github.io">
+            LatentFusion
+          </a>
+          <a class="navbar-item" href="https://photoshape.github.io">
+            PhotoShape
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav> -->
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">GT-Loc: Unifying When and Where in Images Through a Joint Embedding Space</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://davidshatwell.com">David G. Shatwell</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://daveishan.github.io/">Ishan Rajendrakumar Dave</a><sup>2</sup>,</span>
+            <span class="author-block">
+              <a href="https://swetha5.github.io/">Sirnam Swetha</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://www.crcv.ucf.edu/person/mubarak-shah/">Mubarak Shah</a><sup>1</sup>,
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Center for Research in Computer Vision,</span>
+            <span class="author-block"><sup>2</sup>Adobe</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2507.10473"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2507.10473"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <!-- <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span> -->
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- TL;DR -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">TL;DR</h2>
+        <div class="content has-text-justified">
+          <img src="static/images/teaser.png" style="width: 100%;">
+            <p style="text-align: justify; margin-top: 20px;">
+                <b>GT-Loc</b> is a geo-temporal retrieval model capable of:
+            </p>
+            <p style="text-align: justify;">
+                <b>Time Prediction & Geo‑Localization:</b>
+                Given a query image, GT‑Loc encodes its visual content and compares it to two separate galleries: one of timestamp embeddings and one of GPS‑location embeddings. The closest matches yield an estimated capture time (e.g. “Dec 18, 1:50 PM”) and an estimated geographic coordinate (e.g. “41° 42′ 9″ N, 86° 14′ 16″ W”).
+            </p>
+            <p style="text-align: justify;">
+                <b>Geo‑Time Composed Image Retrieval:</b>
+                GT‑Loc can also work in reverse: you specify a desired time and place, each encoded into its own embedding. Those two embeddings are fused into a single query, which is then used to search an image gallery. The model returns the image whose embedding best matches the combined time‑and‑location request.
+            </p>
+        </div>
+      </div>
+    </div>
+    <!--/ TL;DR -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Timestamp prediction aims to determine when an image was captured using only visual information, supporting applications such as metadata correction, retrieval, and digital forensics. In outdoor scenarios, hourly estimates rely on cues like brightness, hue, and shadow positioning, while seasonal changes and weather inform date estimation. However, these visual cues significantly depend on geographic context, closely linking timestamp prediction to geo-localization. To address this interdependence, we introduce GT-Loc, a novel retrieval-based method that jointly predicts the capture time (hour and month) and geo-location (GPS coordinates) of an image. Our approach employs separate encoders for images, time, and location, aligning their embeddings within a shared high-dimensional feature space. Recognizing the cyclical nature of time, instead of conventional contrastive learning with hard positives and negatives, we propose a temporal metric-learning objective providing soft targets by modeling pairwise time differences over a cyclical toroidal surface. We present new benchmarks demonstrating that our joint optimization surpasses previous time prediction methods, even those using the ground-truth geo-location as an input during inference. Additionally, our approach achieves competitive results on standard geo-localization tasks, and the unified embedding space facilitates compositional and text-based image retrieval.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video. -->
+    <!-- <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div> -->
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- Method. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">Method</h2>
+
+        <!-- Model. -->
+        <h3 class="title is-4">GT-Loc Model</h3>
+        <div class="content has-text-justified">
+          <img src="static/images/method.png" style="width: 100%;">
+          <p>
+            GT‑Loc is built around three parallel encoders that project each input into a single shared feature space: one for images, one for timestamps, and one for GPS coordinates. During training, triplets of an image, its true capture time, and its true location are encoded and then aligned through two complementary retrieval losses: a novel temporal metric learning (TML) loss that softly models cyclic time differences (hour and month) on a toroidal surface, and a geo‑localization loss that brings matching images and coordinates together. By jointly optimizing these objectives, the model learns an embedding space where any modality can retrieve the others: at test time an image can be used to look up its best‑matching time and place, or conversely a specified time and location can be fused into a combined query to retrieve the most relevant image.
+          </p>
+        </div>
+        <br/>
+        <!--/ Model. -->
+
+        <div class="columns is-centered">
+            <!-- TML. -->
+            <div class="column">
+                <h3 class="title is-4 has-text-centered">Temporal Metric Loss</h3>
+                <div class="content has-text-justified">
+                    <img src="static/images/tml-left.png" style="width: 100%;">
+                    <p>
+                        The model first computes cosine similarities between image embeddings and their paired time embeddings, then applies a cross‑entropy loss that forces these similarities to match a precomputed target distance matrix reflecting true cyclic time intervals. This aligns the embedding similarities with actual temporal distances in the supervision signal.
+                    </p>
+                </div>
+            </div>
+            <!--/ TML. -->
+
+            <!-- Cyclic Distance. -->
+            <div class="column">
+                <h3 class="title is-4 has-text-centered">Cyclic Distance</h3>
+                <div class="content has-text-justified has-text-centered">
+                    <img src="static/images/tml-right.png" style="width: 52%; display: block; margin: 0 auto;">
+                    <p>
+                        Each time unit is mapped onto a 2D cyclic surface (a torus) so that true separations follow the shortest wrap‑around path. In contrast, straight‑line (L2) distances on this plane cut across the cycle and therefore overestimate real time differences, whereas our toroidal distance correctly measures wrap‑around intervals.
+                    </p>
+                </div>
+            </div>
+            <!--/ Cyclic Distance. -->
+        </div>
+        
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+<!-- Qualitative Results -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Qualitative Results</h2>
+    <div id="results-carousel" class="carousel results-carousel" data-slides-to-show="1">
+      <div class="item"><img src="static/images/qual1.png" style="width:100%"></div>
+      <div class="item"><img src="static/images/qual2.png" style="width:100%"></div>
+      <div class="item"><img src="static/images/qual3.png" style="width:100%"></div>
+      <div class="item"><img src="static/images/qual4.png" style="width:100%"></div>
+      <div class="item"><img src="static/images/qual5.png" style="width:100%"></div>
+    </div>
+    <p>GT-Loc predictions from the SkyFinder test set. The top-1 predicted location and time are shown below the distributions.</p>
+    <ul>
+      <li>- <strong>Left:</strong> Input RGB images, with ground truth location and capture time.</li>
+      <li>- <strong>Center:</strong> Spatial distribution of the predicted GPS coordinates colored by the cosine similarity between the location and image embeddings.</li>
+      <li>- <strong>Right:</strong> Histogram of the top-1k retrieved months and hours, weighted by the cosine similarity between the image and time embeddings.</li>
+    </ul>
+  </div>
+</section>
+
+<link rel="stylesheet" href="https://unpkg.com/bulma-carousel/dist/css/bulma-carousel.min.css">
+<script src="https://unpkg.com/bulma-carousel/dist/js/bulma-carousel.min.js"></script>
+
+<style>
+  #results-carousel,
+  #results-carousel .carousel-container {
+    overflow: hidden !important;
+  }
+  #results-carousel .carousel-container {
+    padding: 0 !important;
+    justify-content: center !important;
+  }
+  #results-carousel .item {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  bulmaCarousel.attach('#results-carousel', {
+    slidesToShow:    1,
+    slidesToScroll:  1,
+    loop:            true,
+    navigation:      true,
+    pagination:      false
+  });
+});
+</script>
+<!--/ Qualitative Results -->
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@misc{shatwell2025gtloc,
+      title={GT-Loc: Unifying When and Where in Images Through a Joint Embedding Space}, 
+      author={David G. Shatwell and Ishan Rajendrakumar Dave and Sirnam Swetha and Mubarak Shah},
+      year={2025},
+      eprint={2507.10473},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2507.10473}, 
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is adapted from <a href="https://github.com/nerfies/nerfies.github.io/tree/main">Nerfies</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
