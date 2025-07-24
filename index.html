@@ -88,7 +88,11 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">GT-Loc: Unifying When and Where in Images Through a Joint Embedding Space</h1>
+          <h1 class="title is-1 publication-title mb-6">GT-Loc: Unifying When and Where in Images Through a Joint Embedding Space</h1>
+          <h2 class="title is-2 publication-title mb-6">
+            <span style="color: #666666;">ICCV 2025</span> 
+            <span style="color: #d9534f;">(<strong>Oral Presentation</strong>)</span>
+          </h2>
           <div class="is-size-5 publication-authors">
             <span class="author-block">
               <a href="https://davidshatwell.com">David G. Shatwell</a><sup>1</sup>,</span>
@@ -227,7 +231,7 @@
         <div class="content has-text-justified">
           <img src="static/images/method.png" style="width: 100%;">
           <p>
-            GT‑Loc is built around three parallel encoders that project each input into a single shared feature space: one for images, one for timestamps, and one for GPS coordinates. During training, triplets of an image, its true capture time, and its true location are encoded and then aligned through two complementary retrieval losses: a novel temporal metric learning (TML) loss that softly models cyclic time differences (hour and month) on a toroidal surface, and a geo‑localization loss that brings matching images and coordinates together. By jointly optimizing these objectives, the model learns an embedding space where any modality can retrieve the others: at test time an image can be used to look up its best‑matching time and place, or conversely a specified time and location can be fused into a combined query to retrieve the most relevant image.
+            <strong>GT-Loc</strong> is built around three parallel encoders that project each input into a single shared feature space: one for images, one for timestamps, and one for GPS coordinates. During training, triplets of an image, its true capture time, and its true location are encoded and then aligned through two complementary retrieval losses: a novel <strong>temporal metric learning (TML)</strong> loss that softly models cyclic time differences (hour and month) on a toroidal surface, and a geo‑localization loss that brings matching images and coordinates together. By jointly optimizing these objectives, the model learns an embedding space where any modality can retrieve the others: at test time an image can be used to look up its best‑matching time and place, or conversely a specified time and location can be fused into a combined query to retrieve the most relevant image.
           </p>
         </div>
         <br/>
@@ -236,7 +240,7 @@
         <div class="columns is-centered">
             <!-- TML. -->
             <div class="column">
-                <h3 class="title is-4 has-text-centered">Temporal Metric Loss</h3>
+                <h3 class="title is-4 has-text-centered">Temporal Metric Learning</h3>
                 <div class="content has-text-justified">
                     <img src="static/images/tml-left.png" style="width: 100%;">
                     <p>
@@ -288,23 +292,60 @@
   </div>
 </section>
 
-<link rel="stylesheet" href="https://unpkg.com/bulma-carousel/dist/css/bulma-carousel.min.css">
-<script src="https://unpkg.com/bulma-carousel/dist/js/bulma-carousel.min.js"></script>
 
-<style>
-  #results-carousel,
-  #results-carousel .carousel-container {
-    overflow: hidden !important;
-  }
-  #results-carousel .carousel-container {
-    padding: 0 !important;
-    justify-content: center !important;
-  }
-  #results-carousel .item {
-    flex: 0 0 100% !important;
-    max-width: 100% !important;
-  }
-</style>
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- Quantitative Results. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">Quantitative Results</h2>
+
+        <!-- Time Prediction. -->
+        <h3 class="title is-4">Time-of-Capture Prediction</h3>
+        <div class="content has-text-justified">
+          <p>
+            <strong>Zero-shot time prediction</strong> on the unseen cameras of SkyFinder dataset. Rows marked by * indicate methods we replicate, closely adhering to the protocols outlined by prior work.
+          </p>
+          <div class="has-text-centered">
+            <img src="static/images/quant_time.png" style="width: 50%;">
+          </div>
+        </div>
+        <br/>
+        <!--/ Model. -->
+
+        <!-- Geo-Localization. -->
+        <h3 class="title is-4">Geo-Localization</h3>
+        <div class="content has-text-justified">
+          <p>
+            <strong>Zero-shot geo-localization</strong> on Im2GPS3k & GWS15k datasets, reported on the ratio of samples that are correctly predicted under distance thresholds of 1 km radius.
+          </p>
+          <div class="has-text-centered">
+            <img src="static/images/quant_loc.png" style="width: 50%;">
+          </div>
+        </div>
+        <br/>
+        <!--/ Geo-Localization. -->
+
+        <!-- Image Retrieval. -->
+        <h3 class="title is-4">Image Retrieval</h3>
+        <div class="content has-text-justified">
+          <p>
+            <strong>Zero-shot image retrieval</strong> (T+L→I) on unseen cameras of the SkyFinder dataset. Given a query location and time, we retrieve the top-k candidate images from a gallery and report the recall metric.
+          </p>
+          <div class="has-text-centered">
+            <img src="static/images/quant_imgret.png" style="width: 50%;">
+          </div>
+        </div>
+        <br/>
+        <!--/ Image Retrieval. -->
+        
+      </div>
+    </div>
+
+  </div>
+</section>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
