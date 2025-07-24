@@ -1,6 +1,6 @@
 # Nerfies
 
-This is the repository that contains source code for the [GT-Loc website](https://gtloc.github.io).
+This is the repository that contains source code for the [GT-Loc website](https://davidshatwell.com/gtloc.github.io/).
 
 If you find GT-Loc useful for your work please cite:
 ```
